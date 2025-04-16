@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.pyvenv.cfg
+
+# Secrets and config
+.streamlit/secrets.toml
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Editor & IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Python environment files
+pip-wheel-metadata/
+*.whl
+
+# Misc
+*.bak
+*.tmp
+
+# Optional: compiled shared libs or C extensions
+Lib/
+Include/
+Scripts/
+share/
+etc/
+Images/
