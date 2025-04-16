@@ -1,4 +1,26 @@
 import streamlit as st
+import requests
+import re
+
+
+def is_valid_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    return re.match(pattern, email) is not None
+
+def notify_telegram(name, email, message):
+    token = st.secrets["TELEGRAM_TOKEN"]
+    chat_id = st.secrets["TELEGRAM_CHAT_ID"]
+    text = f"📩 New message from {name} ({email}):\n{message}"
+
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = {"chat_id": chat_id, "text": text}
+
+    response = requests.post(url, data=data)
+    print(response)
+    if response.ok:
+        st.success("✅ Message sent thanks!")
+    else:
+        st.error("❌ There was an error sorry!")
 
 # 📄 Page setup
 st.set_page_config(
@@ -49,18 +71,10 @@ with st.form("contact_form"):
     if submitted:
         if not name or not email or not message:
             st.warning("⚠️ Please fill in all fields before submitting.")
+        elif not is_valid_email(email):
+            st.warning("⚠️ Please enter a valid email.")
         else:
-            subject = f"Portfolio - New Message from {name}"
-            body = f"""You received a message from your portfolio site:
-
-Name: {name}
-Email: {email}
-
-Message:
-{message}
-"""
-            print(subject, body)
-            st.success("Your message has been sent!")
+            notify_telegram(name, email, message)
 
 # 🦶 Footer
 st.markdown("---")
